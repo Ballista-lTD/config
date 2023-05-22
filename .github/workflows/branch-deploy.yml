@@ -24,13 +24,46 @@ jobs:
         with:
           ref: ${{ steps.branch-deploy.outputs.ref }}
 
+      - name: Get latest commit hash of entitlements-app
+        id: latest-commit-hash
+        run: |
+          echo "::set-output name=hash::$(git ls-remote https://github.com/Ballista-lTD/entitlements-app.git HEAD | cut -f 1)"
+
+      - name: Cache entitlements-app
+        id: cache-entitlements-app
+        uses: actions/cache@v2
+        with:
+          path: entitlements-app
+          key: entitlements-app-${{ steps.latest-commit-hash.outputs.hash }}
+
+      - name: Clone Entitlements
+        if: steps.cache-entitlements-app.outputs.cache-hit != 'true'
+        run: |
+          git clone https://$GITHUB_ACCESS_TOKEN@github.com/Ballista-lTD/entitlements-app.git entitlements-app
+          mv entitlements-app/* .
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
       - uses: ruby/setup-ruby@cd4241788aec4fdcd3325da7068efa9b62a017af
         with:
           ruby-version: 2.7.5
           bundler-cache: true
 
+      - name: Cache Ruby gems
+        id: cache-ruby-gems
+        uses: actions/cache@v2
+        with:
+          path: |
+            vendor/gems
+            bin
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-${{ hashFiles('lib/**') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
       - name: bootstrap
+        if: steps.cache-ruby-gems.outputs.cache-hit != 'true'
         run: script/bootstrap
+
 
       # Here we run a deploy. It is "gated" by the IssueOps logic and will only run if the outputs from our branch-deploy step indicate that the workflow should continue
       - name: deploy
