@@ -38,11 +38,12 @@ jobs:
 
       - name: Clone Entitlements
         if: steps.cache-entitlements-app.outputs.cache-hit != 'true'
-        run: |
-          git clone https://$GITHUB_ACCESS_TOKEN@github.com/Ballista-lTD/entitlements-app.git entitlements-app
-          mv entitlements-app/* .
+        run: git clone https://$GITHUB_ACCESS_TOKEN@github.com/Ballista-lTD/entitlements-app.git entitlements-app
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
+      - name: Move entitlements-app
+        run: mv entitlements-app/* .
 
       - uses: ruby/setup-ruby@cd4241788aec4fdcd3325da7068efa9b62a017af
         with:
