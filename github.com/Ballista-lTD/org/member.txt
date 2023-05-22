@@ -1,0 +1,10 @@
+description = Members of the github-entitlements
+
+# Prefer admin over member if defined in both places
+group != github.com/Ballista-lTD/org/admin
+
+metadata_no_conditions_ok = true
+
+username=varshashaheen
+username=sunithvs
+username=ajuroshan

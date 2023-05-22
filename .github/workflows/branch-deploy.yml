@@ -1,0 +1,45 @@
+name: branch-deploy
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions: write-all
+
+jobs:
+  rubocop:
+    name: runner / rspec
+    runs-on: ubuntu-20.04
+
+    env:
+      GITHUB_ORG_TOKEN: ${{ secrets.ORG_TOKEN }}
+
+    steps:
+      - name: branch-deploy
+        id: branch-deploy
+        uses: github/branch-deploy@v5.2.2
+        
+      # Check out the ref from the output of the IssueOps command
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # pin@v3.0.2
+        with:
+          ref: ${{ steps.branch-deploy.outputs.ref }}
+
+      - uses: ruby/setup-ruby@cd4241788aec4fdcd3325da7068efa9b62a017af
+        with:
+          ruby-version: 2.7.5
+          bundler-cache: true
+
+      - name: bootstrap
+        run: script/bootstrap
+
+      # Here we run a deploy. It is "gated" by the IssueOps logic and will only run if the outputs from our branch-deploy step indicate that the workflow should continue
+      - name: deploy
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
+        run: |
+          set -o pipefail
+          script/deploy | tee deploy.out
+          MSG=$(cat deploy.out)
+          MSG="\`\`\`output\n${MSG}\n\`\`\`"
+          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+          echo "$MSG" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV

@@ -1,0 +1,39 @@
+<%-
+begin
+  require_relative "/data/entitlements/lib/entitlements-and-plugins"
+rescue Exception
+  begin
+    require_relative "lib/entitlements-and-plugins"
+  rescue Exception
+    # We might not have the plugins installed and still want this file to be
+    # loaded. Don't raise anything but silently fail.
+  end
+end
+-%>
+---
+configuration_path: ../
+groups:
+  github.com/Ballista-lTD/org:
+    addr: https://api.github.com
+    base: ou=org,ou=Ballista-lTD,ou=GitHub,dc=github,dc=com
+    dir: github.com/Ballista-lTD/org
+    org: Ballista-lTD
+    token: <%= ENV["GITHUB_ORG_TOKEN"] %>
+    type: "github_org"
+
+  github.com/Ballista-lTD/teams:
+    addr: https://api.github.com
+    base: ou=teams,ou=Ballista-lTD,ou=GitHub,dc=github,dc=com
+    dir: github.com/Ballista-lTD/teams
+    org: Ballista-lTD
+    token: <%= ENV["GITHUB_ORG_TOKEN"] %>
+    type: "github_team"
+
+people:
+  yaml:
+    type: yaml
+    config:
+      filename: config/people.yaml
+      person_dn_format: uid=%KEY%,ou=People,dc=ballista,dc=tech
+
+people_data_source: yaml
