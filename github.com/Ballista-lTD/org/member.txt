@@ -10,3 +10,4 @@ username=ajuroshan
 
 metadata_approval_pattern = app-owner-required
 metadata_application_owner = github.com/Ballista-lTD/teams/core
+metadata_application_notify_team = github/core
