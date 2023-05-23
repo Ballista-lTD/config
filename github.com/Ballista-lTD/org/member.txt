@@ -6,4 +6,3 @@ group != github.com/Ballista-lTD/org/admin
 metadata_no_conditions_ok = true
 
 username=sunithvs
-username=ajuroshan
