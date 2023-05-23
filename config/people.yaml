@@ -15,3 +15,7 @@ rohittp0:
   dn: uid=rohittp0,ou=People,dc=ballista,dc=tech
   githubdotcomid: rohittp0
   manager: rohittp0
+naaji-navas:
+  dn: uid=naaji-navas,ou=People,dc=ballista,dc=tech
+  githubdotcomid: naaji-navas
+  manager: rohittp0
