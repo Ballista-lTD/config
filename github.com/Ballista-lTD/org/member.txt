@@ -7,4 +7,3 @@ metadata_no_conditions_ok = true
 
 username=sunithvs
 username=ajuroshan
-username=naaji-navas
