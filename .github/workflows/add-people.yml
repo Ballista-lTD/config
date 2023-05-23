@@ -43,4 +43,5 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           branch: ${{ github.head_ref || github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ env.changes }} != ''
