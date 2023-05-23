@@ -25,7 +25,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
       - name: Run people.rb
-        run: ruby users.rb
+        run: ruby .github/scripts/users.rb
 
       - name: Check for changes
         id: git-status
