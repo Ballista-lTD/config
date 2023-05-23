@@ -1,0 +1,45 @@
+name: Update people.yaml
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'github.com/Ballista-lTD/**/*.txt'
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'github.com/Ballista-lTD/**/*.txt'
+
+jobs:
+  run-people-rb:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+
+      - name: Run people.rb
+        run: ruby users.rb
+
+      - name: Check for changes
+        id: git-status
+        run: echo ::set-output name=changes::$(git status --porcelain)
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Update people.yaml" --author "GitHub Actions <actions@github.com>" || echo "No changes to commit"
+        if: steps.git-status.outputs.changes != ''
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          branch: ${{ github.head_ref || github.ref }}
+        if: steps.git-status.outputs.changes != ''

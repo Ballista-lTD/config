@@ -1,17 +1,17 @@
 ---
-rohittp0:
-  dn: uid=rohit,ou=People,dc=ballista,dc=tech
-  githubdotcomid: rohittp0
-  manager: rohittp0
 varshashaheen:
-  dn: uid=rohit,ou=People,dc=ballista,dc=tech
+  dn: uid=varshashaheen,ou=People,dc=ballista,dc=tech
   githubdotcomid: varshashaheen
   manager: rohittp0
 sunithvs:
-  dn: uid=rohit,ou=People,dc=ballista,dc=tech
+  dn: uid=sunithvs,ou=People,dc=ballista,dc=tech
   githubdotcomid: sunithvs
   manager: rohittp0
 ajuroshan:
-  dn: uid=rohit,ou=People,dc=ballista,dc=tech
+  dn: uid=ajuroshan,ou=People,dc=ballista,dc=tech
   githubdotcomid: ajuroshan
+  manager: rohittp0
+rohittp0:
+  dn: uid=rohittp0,ou=People,dc=ballista,dc=tech
+  githubdotcomid: rohittp0
   manager: rohittp0
