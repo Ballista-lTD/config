@@ -14,7 +14,8 @@ on:
       - 'github.com/Ballista-lTD/**/*.txt'
 
 jobs:
-  run-people-rb:
+  update-people:
+    name: update-people
     runs-on: ubuntu-latest
 
     steps:
