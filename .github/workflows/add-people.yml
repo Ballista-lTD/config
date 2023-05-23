@@ -29,7 +29,7 @@ jobs:
 
       - name: Check for changes
         id: git-status
-        run: echo "{changes}=$(git status --porcelain)"
+        run: echo "{changes}={$(git status --porcelain)}"
 
       - name: Commit changes
         run: |
