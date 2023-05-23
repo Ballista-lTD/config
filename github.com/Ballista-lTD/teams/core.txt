@@ -1,0 +1,4 @@
+description = Members of core team
+
+username=varshashaheen
+username=rohittp0

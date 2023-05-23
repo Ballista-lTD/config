@@ -8,3 +8,6 @@ metadata_no_conditions_ok = true
 username=sunithvs
 username=ajuroshan
 username=naaji-navas
+
+metadata_approval_pattern = app-owner-required
+metadata_application_owner = github.com/Ballista-lTD/teams/core
